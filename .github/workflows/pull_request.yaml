@@ -1,0 +1,25 @@
+name: 'Pull request'
+
+on:
+  pull_request:
+    branches:
+      - 'main'
+
+jobs:
+  pull_request:
+    name: 'Pull request'
+    runs-on: 'ubuntu-latest'
+
+    steps:
+      - name: 'Load code'
+        uses: 'actions/checkout@v3'
+      - name: 'Setup Node'
+        uses: 'actions/setup-node@v3'
+        with:
+          node-version: '18.x'
+      - name: 'Install dependencies'
+        run: 'npm install'
+      - name: 'Format code'
+        run: 'npm run format'
+      - name: 'Build'
+        run: 'npm run build'
