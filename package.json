@@ -1,6 +1,6 @@
 {
   "name": "monbernate",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Mongoose-based ODM inspired by Hibernate and TypeORM",
   "repository": {
     "type": "git",

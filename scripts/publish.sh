@@ -27,6 +27,7 @@ update_version() {
     else
       git stash
       npm version patch
+      git push
       git stash pop
   fi
 
