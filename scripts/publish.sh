@@ -25,9 +25,12 @@ update_version() {
     then
       echo "Parameter 'version' in $FILE already updated, skip auto-patching..."
     else
+      git stash
       npm version patch
-      npm ci
+      git stash pop
   fi
+
+  npm ci
 }
 
 publish() {
@@ -38,19 +41,11 @@ publish() {
     curl \
       -X "GET" \
       -H "Authorization: Bearer $KEYSTORE_ACCESS_TOKEN" \
-      --url "$KEYSTORE_HOST/applications/monbernate/publishing/npm"
+      --url "$KEYSTORE_HOST/applications/monbernate/publishing/npm/access-token"
   )
 
   echo "Publish..."
   NODE_AUTH_TOKEN="$NPM_AUTH_TOKEN" npm publish --access public --provenance || exit 1
-}
-
-update_git_branch() {
-  echo 'Update main branch...'
-  git add .
-  git commit -m "Update version"
-  git pull origin main
-  git push origin main
 }
 
 main() {
@@ -58,7 +53,6 @@ main() {
   update_npm
   update_version
   publish
-  update_git_branch
 }
 
 main
